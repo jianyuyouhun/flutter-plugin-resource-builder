@@ -99,10 +99,13 @@ public class ResourceGenerator {
             if (child.isDirectory()) {
                 childCodeInfo.add(create(child));
             } else {
-                ResourceCodeInfo.ResField resField = new ResourceCodeInfo.ResField();
-                resField.setKey(child.getName().substring(0, child.getName().lastIndexOf(".")));
-                resField.setValue(child.getAbsolutePath().replaceAll("\\\\", "/").replace(dirPath, virtualPath));
-                fieldList.add(resField);
+                String name = child.getName();
+                if (name.endsWith("png")||name.endsWith("jpg")||name.endsWith("jpeg")||name.endsWith("gif")) {
+                    ResourceCodeInfo.ResField resField = new ResourceCodeInfo.ResField();
+                    resField.setKey(name.substring(0, name.lastIndexOf(".")));
+                    resField.setValue(child.getAbsolutePath().replaceAll("\\\\", "/").replace(dirPath, virtualPath));
+                    fieldList.add(resField);
+                }
             }
         }
         codeInfo.setChildCodeInfo(childCodeInfo);
