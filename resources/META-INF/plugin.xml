@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.gallops.flutter.plugins.ResourceBuilder</id>
   <name>ResourceBuilder</name>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
   <description><![CDATA[
