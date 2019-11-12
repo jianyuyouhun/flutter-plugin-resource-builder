@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class ResourceManager extends BaseManager {
     private Project project;
     private FileAlterationMonitor monitor;
+
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(Project project) {
@@ -71,7 +72,7 @@ public class ResourceManager extends BaseManager {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (monitor!=null) {
+        if (monitor != null) {
             try {
                 monitor.stop();
             } catch (Exception e) {
