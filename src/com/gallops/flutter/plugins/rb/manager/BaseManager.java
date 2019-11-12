@@ -7,4 +7,7 @@ public abstract class BaseManager {
 
     public void onAllCreate() {
     }
+
+    public void onDestroy() {
+    }
 }

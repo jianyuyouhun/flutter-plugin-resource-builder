@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class ResourceManager extends BaseManager {
-    Project project;
-
+    private Project project;
+    private FileAlterationMonitor monitor;
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(Project project) {
@@ -35,7 +35,8 @@ public class ResourceManager extends BaseManager {
             }
         });
         try {
-            new FileAlterationMonitor(interval, observer).start();
+            monitor = new FileAlterationMonitor(interval, observer);
+            monitor.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,5 +66,18 @@ public class ResourceManager extends BaseManager {
         File parentFile = file.getParentFile();
         File targetFile = new File(parentFile, file.getName() + "-res.dart");
         new ResourceGenerator(path, targetFile.getAbsolutePath(), virtualPath).generator();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (monitor!=null) {
+            try {
+                monitor.stop();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        DirMonitor.getInstance().cancelAll();
     }
 }

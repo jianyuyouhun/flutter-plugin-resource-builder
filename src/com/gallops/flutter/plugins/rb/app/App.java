@@ -49,4 +49,11 @@ public class App implements AppComponent {
     private void registerManager(List<BaseManager> managerList) {
         managerList.add(new ResourceManager());
     }
+
+    @Override
+    public void projectClosed() {
+        for (BaseManager manager : managerList) {
+            manager.onDestroy();
+        }
+    }
 }
