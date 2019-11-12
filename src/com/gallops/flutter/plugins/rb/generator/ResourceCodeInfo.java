@@ -7,9 +7,7 @@ import java.util.List;
  */
 public class ResourceCodeInfo {
     private String className;
-    private List<ResField> resName;
-    private List<ResourceCodeInfo> childCodeInfo;
-    private int deep = 0;
+    private List<ResField> fieldList;
 
     public String getClassName() {
         return className;
@@ -19,28 +17,12 @@ public class ResourceCodeInfo {
         this.className = className;
     }
 
-    public List<ResField> getResName() {
-        return resName;
+    public List<ResField> getFieldList() {
+        return fieldList;
     }
 
-    public void setResName(List<ResField> resName) {
-        this.resName = resName;
-    }
-
-    public List<ResourceCodeInfo> getChildCodeInfo() {
-        return childCodeInfo;
-    }
-
-    public void setChildCodeInfo(List<ResourceCodeInfo> childCodeInfo) {
-        this.childCodeInfo = childCodeInfo;
-    }
-
-    public int getDeep() {
-        return deep;
-    }
-
-    public void setDeep(int deep) {
-        this.deep = deep;
+    public void setFieldList(List<ResField> fieldList) {
+        this.fieldList = fieldList;
     }
 
     public static class ResField {

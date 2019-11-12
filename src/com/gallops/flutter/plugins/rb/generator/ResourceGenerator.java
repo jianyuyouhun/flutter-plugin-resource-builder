@@ -1,6 +1,5 @@
 package com.gallops.flutter.plugins.rb.generator;
 
-import com.gallops.flutter.plugins.rb.generator.ResourceCodeInfo;
 import com.gallops.flutter.plugins.rb.util.FileUtils;
 
 import java.io.File;
@@ -30,15 +29,7 @@ public class ResourceGenerator {
             return;
         }
         ResourceCodeInfo codeInfo = create(file);
-        measureDeep(codeInfo, 0);
         FileUtils.putInFile(new File(outPath), generateCode(codeInfo));
-    }
-
-    private void measureDeep(ResourceCodeInfo codeInfo, int deep) {
-        codeInfo.setDeep(deep);
-        for (ResourceCodeInfo info : codeInfo.getChildCodeInfo()) {
-            measureDeep(info, deep + 1);
-        }
     }
 
     /**
@@ -48,36 +39,16 @@ public class ResourceGenerator {
      */
     private String generateCode(ResourceCodeInfo codeInfo) {
         StringBuilder codeBuilder = new StringBuilder();
-        if (codeInfo.getDeep() == 0) {
-            appendBlank(codeBuilder, codeInfo.getDeep());
-            codeBuilder.append("///auto generate code, please do not modify;\n");
-        }
-        appendBlank(codeBuilder, codeInfo.getDeep());
+        codeBuilder.append("///auto generate code, please do not modify;\n");
         codeBuilder.append("class ").append(codeInfo.getClassName()).append(" {\n");
-        if (codeInfo.getResName().size() != 0) {
-            generateFieldCode(codeInfo.getResName(), codeBuilder, codeInfo.getDeep());
-        }
-        if (codeInfo.getChildCodeInfo().size() != 0) {
-            for (ResourceCodeInfo info : codeInfo.getChildCodeInfo()) {
-                codeBuilder.append(generateCode(info));
-            }
-        }
-        appendBlank(codeBuilder, codeInfo.getDeep());
-        codeBuilder.append("}\n\n");
+        generateFieldCode(codeInfo.getFieldList(), codeBuilder);
+        codeBuilder.append("}\n");
         return codeBuilder.toString();
     }
 
-    private void appendBlank(StringBuilder builder, int deep) {
-        for (int i = 0; i < deep; i++) {
-            builder.append("   ");
-        }
-    }
-
-    private void generateFieldCode(List<ResourceCodeInfo.ResField> fields, StringBuilder builder, int deep) {
+    private void generateFieldCode(List<ResourceCodeInfo.ResField> fields, StringBuilder builder) {
         for (ResourceCodeInfo.ResField field : fields) {
-            builder.append("   ");
-            appendBlank(builder, deep);
-            builder.append("static const String ").append(field.getKey()).append(" = '").append(field.getValue()).append("';\n");
+            builder.append("  static const String ").append(field.getKey()).append(" = '").append(field.getValue()).append("';\n");
         }
     }
 
@@ -91,16 +62,21 @@ public class ResourceGenerator {
     private ResourceCodeInfo create(File file) {
         ResourceCodeInfo codeInfo = new ResourceCodeInfo();
         codeInfo.setClassName(file.getName());
-        File[] files = file.listFiles();
-        if (files == null) files = new File[]{};
         List<ResourceCodeInfo.ResField> fieldList = new ArrayList<>();
-        List<ResourceCodeInfo> childCodeInfo = new ArrayList<>();
+        getResField(fieldList, file);
+        codeInfo.setFieldList(fieldList);
+        return codeInfo;
+    }
+
+    private void getResField(List<ResourceCodeInfo.ResField> fieldList, File directory) {
+        File[] files = directory.listFiles();
+        if (files == null) files = new File[]{};
         for (File child : files) {
             if (child.isDirectory()) {
-                childCodeInfo.add(create(child));
+                getResField(fieldList, child);
             } else {
                 String name = child.getName();
-                if (name.endsWith("png")||name.endsWith("jpg")||name.endsWith("jpeg")||name.endsWith("gif")) {
+                if (name.endsWith("png") || name.endsWith("jpg") || name.endsWith("jpeg") || name.endsWith("gif")) {
                     ResourceCodeInfo.ResField resField = new ResourceCodeInfo.ResField();
                     resField.setKey(name.substring(0, name.lastIndexOf(".")));
                     resField.setValue(child.getAbsolutePath().replaceAll("\\\\", "/").replace(dirPath, virtualPath));
@@ -108,9 +84,6 @@ public class ResourceGenerator {
                 }
             }
         }
-        codeInfo.setChildCodeInfo(childCodeInfo);
-        codeInfo.setResName(fieldList);
-        return codeInfo;
     }
 
     /**
