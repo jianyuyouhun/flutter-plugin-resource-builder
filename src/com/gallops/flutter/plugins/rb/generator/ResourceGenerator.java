@@ -42,13 +42,13 @@ public class ResourceGenerator {
         codeBuilder.append("///auto generate code, please do not modify;\n");
         codeBuilder.append("class ").append(codeInfo.getClassName()).append(" {\n");
         generateFieldCode(codeInfo.getFieldList(), codeBuilder);
-        codeBuilder.append("}\n");
+        codeBuilder.append("}\n\n");
         return codeBuilder.toString();
     }
 
     private void generateFieldCode(List<ResourceCodeInfo.ResField> fields, StringBuilder builder) {
         for (ResourceCodeInfo.ResField field : fields) {
-            builder.append("  static const String ").append(field.getKey()).append(" = '").append(field.getValue()).append("';\n");
+            builder.append("   static const String ").append(field.getKey()).append(" = '").append(field.getValue()).append("';\n");
         }
     }
 
