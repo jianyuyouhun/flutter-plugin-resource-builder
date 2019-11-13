@@ -8,10 +8,8 @@ import java.util.List;
 
 /**
  * 资源文件代码生成器
- * 1、向monitor注册监听器，监听到文件夹变化
- * 2、生成资源文件代码，放在assets定义的同级目录下，命名为res.dart
  */
-public class ResourceGenerator {
+public class ResourceGenerator implements CodeGenerator {
     private String dirPath;
     private String outPath;
     private String virtualPath;
@@ -22,7 +20,8 @@ public class ResourceGenerator {
         this.virtualPath = virtualPath;
     }
 
-    public void generator() {
+    @Override
+    public void generate() {
         deleteOldFile();
         File file = new File(dirPath);
         if (!file.isDirectory()) {
@@ -54,7 +53,7 @@ public class ResourceGenerator {
 
 
     /**
-     * 递归整理res文件夹
+     * 获取代码结构，dart不允许内部类，所以这里对多级文件夹做扁平化处理
      *
      * @param file
      * @return
@@ -68,6 +67,13 @@ public class ResourceGenerator {
         return codeInfo;
     }
 
+    /**
+     * 递归整理res文件夹
+     *
+     * @param fieldList
+     * @param directory
+     * @return
+     */
     private void getResField(List<ResourceCodeInfo.ResField> fieldList, File directory) {
         File[] files = directory.listFiles();
         if (files == null) files = new File[]{};

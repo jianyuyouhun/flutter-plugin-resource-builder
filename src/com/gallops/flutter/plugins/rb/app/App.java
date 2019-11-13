@@ -1,6 +1,5 @@
 package com.gallops.flutter.plugins.rb.app;
 
-import com.gallops.flutter.plugins.rb.manager.BaseManager;
 import com.gallops.flutter.plugins.rb.manager.ResourceManager;
 import com.intellij.openapi.project.Project;
 

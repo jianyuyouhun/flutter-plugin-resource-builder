@@ -1,4 +1,4 @@
-package com.gallops.flutter.plugins.rb.parser;
+package com.gallops.flutter.plugins.rb.util.parser;
 
 import com.intellij.openapi.project.Project;
 import org.yaml.snakeyaml.Yaml;

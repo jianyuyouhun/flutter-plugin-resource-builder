@@ -1,8 +1,10 @@
 package com.gallops.flutter.plugins.rb.manager;
 
+import com.gallops.flutter.plugins.rb.app.BaseManager;
+import com.gallops.flutter.plugins.rb.generator.CodeGenerator;
 import com.gallops.flutter.plugins.rb.generator.ResourceGenerator;
-import com.gallops.flutter.plugins.rb.monitor.DirMonitor;
-import com.gallops.flutter.plugins.rb.parser.YamlLoader;
+import com.gallops.flutter.plugins.rb.util.monitor.DirMonitor;
+import com.gallops.flutter.plugins.rb.util.parser.YamlLoader;
 import com.intellij.openapi.project.Project;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
@@ -13,14 +15,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 资源管理器
+ * 1、向monitor注册监听器，监听到文件夹变化
+ * 2、生成资源文件代码，放在assets定义的同级目录下，命名为res.dart
+ */
 public class ResourceManager extends BaseManager {
-    private Project project;
     private FileAlterationMonitor monitor;
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(Project project) {
-        this.project = project;
+        super.onCreate(project);
         long interval = TimeUnit.MILLISECONDS.toMillis(500);
         File rootPath = new File(project.getBasePath());
         File pubspec = new File(project.getBasePath() + "/pubspec.yaml");
@@ -46,6 +52,7 @@ public class ResourceManager extends BaseManager {
     }
 
     private void start() {
+        Project project = getProject();
         Map<String, Object> yaml = YamlLoader.getYaml(project, "/pubspec.yaml");
         if (yaml == null) return;
         Map<String, Object> flutter = (Map<String, Object>) yaml.get("flutter");
@@ -66,7 +73,8 @@ public class ResourceManager extends BaseManager {
         File file = new File(path);
         File parentFile = file.getParentFile();
         File targetFile = new File(parentFile, file.getName() + "-res.dart");
-        new ResourceGenerator(path, targetFile.getAbsolutePath(), virtualPath).generator();
+        CodeGenerator codeGenerator = new ResourceGenerator(path, targetFile.getAbsolutePath(), virtualPath);
+        codeGenerator.generate();
     }
 
     @Override
