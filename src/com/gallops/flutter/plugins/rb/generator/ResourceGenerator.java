@@ -4,6 +4,7 @@ import com.gallops.flutter.plugins.rb.util.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class ResourceGenerator implements CodeGenerator {
             return;
         }
         ResourceCodeInfo codeInfo = create(file);
+        sortFieldList(codeInfo);
         FileUtils.putInFile(new File(outPath), generateCode(codeInfo));
     }
 
@@ -65,6 +67,14 @@ public class ResourceGenerator implements CodeGenerator {
         getResField(fieldList, file);
         codeInfo.setFieldList(fieldList);
         return codeInfo;
+    }
+
+    /**
+     * 按照a-Z排序fieldList
+     * @param codeInfo
+     */
+    private void sortFieldList(ResourceCodeInfo codeInfo) {
+        codeInfo.getFieldList().sort(Comparator.comparing(ResourceCodeInfo.ResField::getKey));
     }
 
     /**

@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.gallops.flutter.plugins.ResourceBuilder</id>
   <name>ResourceBuilder</name>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <vendor email="jianyuyouhun@qq.com" url="http://jianyuyouhun.com">剑雨丶游魂</vendor>
 
   <description><![CDATA[
@@ -15,7 +15,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      1.0.2优化了代码结构，修复了部分内存泄漏问题
+      修复了在mac环境下生成的资源文件静态变量不按照a-Z的顺序排列的bug
     ]]>
   </change-notes>
 
