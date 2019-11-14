@@ -5,13 +5,17 @@
   <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+    此插件会自动解析flutter项目中的pubspec.yaml文件中的flutter/assets。比如：
+
+        flutter:
+          assets:
+            - lib/module/app/res/images/
+
+    然后插件会自动在当前文件夹同级目录下生成一个images-res.dart文件，自动关联资源文件生成静态变量。节省开发时间
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      1.0.2优化了代码结构，修复了部分内存泄漏问题
     ]]>
   </change-notes>
 
