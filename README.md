@@ -6,7 +6,7 @@
 
 	flutter:
 		assets:
-			- lib/module/app/res/images/
+			- libs/module/app/res/images/
 
 然后插件会自动在当前文件夹同级目录下生成一个x-res.dart文件，自动关联资源文件生成静态变量。节省开发时间
 
