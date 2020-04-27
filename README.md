@@ -39,7 +39,7 @@ flutter中图片资源文件不像android原生那样，系统会生成**R.drawa
 
 ![](images/images-dir.png)
 
-安装完此插件并重启android studio生效后，打开项目，拖动图片到images文件夹下。会在images同级目录下生成一个images-res.dart文件。
+拖动图片到images文件夹下。会在images同级目录下生成一个images-res.dart文件。
 
 ![](images/images-res.png)
 
