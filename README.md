@@ -1,6 +1,6 @@
 # README #
 
-flutter中图片资源文件不像android原生那样，系统会生成**R.drawable/R.mipmap**的唯一标识来引用，也不像iOS原生那样可以直接使用路径引用。需要在pubspec.yaml中配置assets文件路径，为了方便开发最好还要编写一个class类声明路径方便调用。此插件就是为了解决这一没有技术含量的苦力活。
+flutter中图片资源需要在pubspec.yaml中配置assets文件路径，为了方便开发最好还要编写一个class类声明路径方便调用。此插件就是为了解决这一没有技术含量的苦力活。
 
 ## 原理
 
