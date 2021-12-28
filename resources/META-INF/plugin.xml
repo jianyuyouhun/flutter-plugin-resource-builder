@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.gallops.flutter.plugins.ResourceBuilder</id>
   <name>ResourceBuilder</name>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <vendor email="jianyuyouhun@qq.com" url="http://jianyuyouhun.com">剑雨丶游魂</vendor>
 
   <description><![CDATA[
@@ -15,15 +15,18 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      修复了在mac环境下生成的资源文件静态变量不按照a-Z的顺序排列的bug
+        1.0.4 修复了android studio无法使用debug
+        1.0.3 修复了在mac环境下生成的资源文件静态变量不按照a-Z的顺序排列的bug
     ]]>
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="173.0"/>
-
+  <idea-version since-build="192" until-build="203.4203.26"/>
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
+  <depends>com.intellij.modules.lang</depends>
+  <depends>com.intellij.modules.all</depends>
+  <depends>com.intellij.modules.platform</depends>
   <!-- uncomment to enable plugin in all products
   <depends>com.intellij.modules.lang</depends>
   -->
