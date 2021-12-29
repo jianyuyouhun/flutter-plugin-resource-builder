@@ -43,7 +43,7 @@ public class CommonUtils {
 
 
     /**
-     * 驼峰转下划线,效率比上面高
+     * 驼峰转下划线
      */
     public static String camelToLine(String str) {
         Matcher matcher = humpPattern.matcher(str);

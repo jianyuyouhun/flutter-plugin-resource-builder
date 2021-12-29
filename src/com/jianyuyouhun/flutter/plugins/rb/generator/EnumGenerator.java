@@ -40,7 +40,7 @@ public class EnumGenerator implements CodeGenerator {
      *                    }
      *                    }
      *                    第一层结构为枚举类型，
-     *                    第二层结构为扩展属性，取并集，缺省为null，
+     *                    第二层结构为扩展属性，取并集，缺省或者为json的都取null，
      * @param directory   输出目录
      */
     public EnumGenerator(String fileName, String className, JsonElement jsonElement, VirtualFile directory) {

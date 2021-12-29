@@ -49,23 +49,7 @@ public class InputJsonDialog extends DialogWrapper implements DocumentListener {
         titleField = new JTextField();
         titleField.setMinimumSize(new Dimension(500, 40));
         titleField.setPreferredSize(new Dimension(1000, 40));
-        titleField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                validateJson();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                validateJson();
-
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                validateJson();
-            }
-        });
+        titleField.getDocument().addDocumentListener(this);
         titleField.setMargin(JBUI.insetsBottom(40));
         constraints.gridx = 1;
         panel.add(titleField, constraints);
