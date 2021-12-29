@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.jianyuyouhun.flutter.plugins.ResourceBuilder</id>
     <name>ResourceBuilder</name>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <vendor email="jianyuyouhun@qq.com" url="http://jianyuyouhun.com">剑雨丶游魂</vendor>
 
     <description><![CDATA[
