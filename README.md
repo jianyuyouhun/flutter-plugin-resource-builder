@@ -14,7 +14,7 @@
 
 1. 拉取本项目到你的**WorkSpace**目录.
 
-		git clone http://gitlab.gallops.cn/study/FlutterResourceBuilder.git
+		git clone http://gitlab.knowrun.cn/study/FlutterResourceBuilder.git
 
 2. 打开Android Studio->setting->Plugins.
 

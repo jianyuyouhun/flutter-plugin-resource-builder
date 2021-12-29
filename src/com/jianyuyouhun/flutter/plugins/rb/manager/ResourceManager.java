@@ -1,10 +1,10 @@
-package com.gallops.flutter.plugins.rb.manager;
+package com.jianyuyouhun.flutter.plugins.rb.manager;
 
-import com.gallops.flutter.plugins.rb.app.BaseManager;
-import com.gallops.flutter.plugins.rb.generator.CodeGenerator;
-import com.gallops.flutter.plugins.rb.generator.ResourceGenerator;
-import com.gallops.flutter.plugins.rb.util.monitor.DirMonitor;
-import com.gallops.flutter.plugins.rb.util.parser.YamlLoader;
+import com.jianyuyouhun.flutter.plugins.rb.app.BaseManager;
+import com.jianyuyouhun.flutter.plugins.rb.generator.CodeGenerator;
+import com.jianyuyouhun.flutter.plugins.rb.generator.ImageGenerator;
+import com.jianyuyouhun.flutter.plugins.rb.util.monitor.DirMonitor;
+import com.jianyuyouhun.flutter.plugins.rb.util.parser.YamlLoader;
 import com.intellij.openapi.project.Project;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
@@ -73,7 +73,7 @@ public class ResourceManager extends BaseManager {
         File file = new File(path);
         File parentFile = file.getParentFile();
         File targetFile = new File(parentFile, file.getName() + "-res.dart");
-        CodeGenerator codeGenerator = new ResourceGenerator(path, targetFile.getAbsolutePath(), virtualPath);
+        CodeGenerator codeGenerator = new ImageGenerator(path, targetFile.getAbsolutePath(), virtualPath);
         codeGenerator.generate();
     }
 

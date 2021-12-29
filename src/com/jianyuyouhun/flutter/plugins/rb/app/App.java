@@ -1,6 +1,6 @@
-package com.gallops.flutter.plugins.rb.app;
+package com.jianyuyouhun.flutter.plugins.rb.app;
 
-import com.gallops.flutter.plugins.rb.manager.ResourceManager;
+import com.jianyuyouhun.flutter.plugins.rb.manager.ResourceManager;
 import com.intellij.openapi.project.Project;
 
 import java.util.ArrayList;
@@ -15,6 +15,10 @@ public class App implements AppComponent {
     }
 
     private Project project;
+
+    public Project getProject() {
+        return project;
+    }
 
     private List<BaseManager> managerList = new ArrayList<>();
 

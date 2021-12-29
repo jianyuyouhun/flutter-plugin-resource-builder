@@ -1,11 +1,11 @@
-package com.gallops.flutter.plugins.rb.generator;
+package com.jianyuyouhun.flutter.plugins.rb.generator;
 
 import java.util.List;
 
 /**
  * 资源文件对象
  */
-public class ResourceCodeInfo {
+public class ImageCodeInfo {
     private String className;
     private List<ResField> fieldList;
 

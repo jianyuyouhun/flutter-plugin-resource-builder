@@ -1,4 +1,4 @@
-package com.gallops.flutter.plugins.rb.util.monitor;
+package com.jianyuyouhun.flutter.plugins.rb.util.monitor;
 
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 public class DirMonitor {
     private static DirMonitor instance;
 
-    private Map<String, OnDirChangeListener> listenerMap = new HashMap<>();
-    private Map<String, FileAlterationMonitor> monitorMap = new HashMap<>();
+    private final Map<String, OnDirChangeListener> listenerMap = new HashMap<>();
+    private final Map<String, FileAlterationMonitor> monitorMap = new HashMap<>();
 
     public static DirMonitor getInstance() {
         if (instance == null) {

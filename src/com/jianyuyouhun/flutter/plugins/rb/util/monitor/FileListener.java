@@ -1,4 +1,4 @@
-package com.gallops.flutter.plugins.rb.util.monitor;
+package com.jianyuyouhun.flutter.plugins.rb.util.monitor;
 
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;

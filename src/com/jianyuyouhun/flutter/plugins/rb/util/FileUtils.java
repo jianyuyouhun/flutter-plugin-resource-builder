@@ -1,4 +1,4 @@
-package com.gallops.flutter.plugins.rb.util;
+package com.jianyuyouhun.flutter.plugins.rb.util;
 
 import java.io.File;
 import java.io.FileWriter;

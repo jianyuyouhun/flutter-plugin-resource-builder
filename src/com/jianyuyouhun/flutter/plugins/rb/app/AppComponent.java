@@ -1,4 +1,4 @@
-package com.gallops.flutter.plugins.rb.app;
+package com.jianyuyouhun.flutter.plugins.rb.app;
 
 import com.intellij.openapi.components.ProjectComponent;
 
