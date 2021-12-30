@@ -17,13 +17,11 @@ public class YamlLoader {
         File yamlFile = new File(project.getBasePath() + yamlName);
         Yaml yaml = new Yaml();
         try {
-            return (Map<String, Object>) yaml.load(new FileInputStream(yamlFile));
+            return yaml.load(new FileInputStream(yamlFile));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return null;
     }
-
-
 
 }

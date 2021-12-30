@@ -1,8 +1,9 @@
 package com.jianyuyouhun.flutter.plugins.rb.manager;
 
+import com.jianyuyouhun.flutter.plugins.rb.app.App;
 import com.jianyuyouhun.flutter.plugins.rb.app.BaseManager;
 import com.jianyuyouhun.flutter.plugins.rb.generator.CodeGenerator;
-import com.jianyuyouhun.flutter.plugins.rb.generator.ImageGenerator;
+import com.jianyuyouhun.flutter.plugins.rb.generator.res.ImageGenerator;
 import com.jianyuyouhun.flutter.plugins.rb.util.monitor.DirMonitor;
 import com.jianyuyouhun.flutter.plugins.rb.util.parser.YamlLoader;
 import com.intellij.openapi.project.Project;
@@ -25,8 +26,8 @@ public class ResourceManager extends BaseManager {
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void onCreate(Project project) {
-        super.onCreate(project);
+    public void onCreate() {
+        Project project = App.getInstance().getRootProject();
         long interval = TimeUnit.MILLISECONDS.toMillis(500);
         File rootPath = new File(project.getBasePath());
         File pubspec = new File(project.getBasePath() + "/pubspec.yaml");
@@ -52,7 +53,7 @@ public class ResourceManager extends BaseManager {
     }
 
     private void start() {
-        Project project = getProject();
+        Project project = App.getInstance().getRootProject();
         Map<String, Object> yaml = YamlLoader.getYaml(project, "/pubspec.yaml");
         if (yaml == null) return;
         Map<String, Object> flutter = (Map<String, Object>) yaml.get("flutter");

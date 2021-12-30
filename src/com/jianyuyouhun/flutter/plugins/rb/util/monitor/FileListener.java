@@ -7,7 +7,11 @@ import java.io.File;
 
 /**
  * 文件夹变化监听
+ * 弃用，不需要传入文件夹，并且文件夹和文件变化最好不要统一成onChange事件，此实现极容易导致无限的循环调用
+ * 仅可用于ResourceManager的业务逻辑。
+ * 建议还是使用FileAlterationListener接口结合实际流程处理
  */
+@Deprecated
 public abstract class FileListener implements FileAlterationListener {
     private String dirPath;
 

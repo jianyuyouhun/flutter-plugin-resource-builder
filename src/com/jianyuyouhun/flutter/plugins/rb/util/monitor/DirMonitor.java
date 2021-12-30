@@ -28,6 +28,11 @@ public class DirMonitor {
     private DirMonitor() {
     }
 
+    /**
+     * 注册文件夹监听事件
+     * @param dirPath   文件夹目录
+     * @param listener  监听器
+     */
     public void startMonitor(String dirPath, OnDirChangeListener listener) {
         if (listenerMap.containsKey(dirPath)) {
             System.out.println("已经为此文件夹注册过监听器");
@@ -52,6 +57,10 @@ public class DirMonitor {
         }
     }
 
+    /**
+     * 注销文件夹监听事件，按照目录注销
+     * @param dirPath 文件夹目录
+     */
     public void cancelMonitor(String dirPath) {
         FileAlterationMonitor monitor = monitorMap.remove(dirPath);
         if (monitor != null) {
@@ -63,6 +72,9 @@ public class DirMonitor {
         }
     }
 
+    /**
+     * 注销所有文件夹监听
+     */
     public void cancelAll() {
         for (FileAlterationMonitor monitor : monitorMap.values()) {
             try {
@@ -74,6 +86,9 @@ public class DirMonitor {
         monitorMap.clear();
     }
 
+    /**
+     * 文件夹监听器
+     */
     public interface OnDirChangeListener {
         void onChanged(String dir);
     }

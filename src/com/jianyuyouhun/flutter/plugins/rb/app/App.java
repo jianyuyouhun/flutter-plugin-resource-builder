@@ -14,25 +14,25 @@ public class App implements AppComponent {
         return instance;
     }
 
-    private Project project;
+    private final Project rootProject;
 
-    public Project getProject() {
-        return project;
+    public Project getRootProject() {
+        return rootProject;
     }
 
-    private List<BaseManager> managerList = new ArrayList<>();
+    private final List<BaseManager> managerList = new ArrayList<>();
 
-    public App(Project project) {
-        this.project = project;
+    public App(Project rootProject) {
+        this.rootProject = rootProject;
         instance = this;
     }
 
     @Override
     public void projectOpened() {
-        if (project == null) return;
+        if (rootProject == null) return;
         registerManager(managerList);
         for (BaseManager manager : managerList) {
-            manager.onCreate(project);
+            manager.onCreate();
         }
         for (BaseManager manager : managerList) {
             manager.onAllCreate();

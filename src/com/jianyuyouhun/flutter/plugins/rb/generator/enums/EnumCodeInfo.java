@@ -1,4 +1,4 @@
-package com.jianyuyouhun.flutter.plugins.rb.generator;
+package com.jianyuyouhun.flutter.plugins.rb.generator.enums;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,12 +29,12 @@ import java.util.Map;
  * <p>
  * }
  */
-public class EnumCodeInfo {
+class EnumCodeInfo {
     private String className;
     private List<EnumItem> enumItemList;
     private List<String> attrKeySet;
 
-    public EnumCodeInfo(@NotNull String className, @NotNull List<EnumItem> enumItemList, @NotNull List<String> attrKeySet) {
+    EnumCodeInfo(@NotNull String className, @NotNull List<EnumItem> enumItemList, @NotNull List<String> attrKeySet) {
         this.className = className;
         this.enumItemList = enumItemList;
         this.attrKeySet = attrKeySet;
@@ -69,7 +69,7 @@ public class EnumCodeInfo {
     /**
      * 枚举item
      */
-    public static class EnumItem {
+    static class EnumItem {
         /**
          * 枚举名称
          */

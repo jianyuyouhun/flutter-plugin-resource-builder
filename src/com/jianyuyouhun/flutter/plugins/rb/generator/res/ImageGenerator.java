@@ -1,5 +1,6 @@
-package com.jianyuyouhun.flutter.plugins.rb.generator;
+package com.jianyuyouhun.flutter.plugins.rb.generator.res;
 
+import com.jianyuyouhun.flutter.plugins.rb.generator.CodeGenerator;
 import com.jianyuyouhun.flutter.plugins.rb.util.FileUtils;
 
 import java.io.File;

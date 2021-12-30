@@ -1,11 +1,10 @@
-package com.jianyuyouhun.flutter.plugins.rb.generator;
+package com.jianyuyouhun.flutter.plugins.rb.generator.enums;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.jianyuyouhun.flutter.plugins.rb.util.FileUtils;
+import com.jianyuyouhun.flutter.plugins.rb.generator.AbstractCodeGenerator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,12 +17,12 @@ import java.util.Map;
 /**
  * 枚举代码生成器
  */
-public class EnumGenerator implements CodeGenerator {
+public class EnumGenerator extends AbstractCodeGenerator {
 
-    private String fileName;
-    private String className;
-    private JsonElement jsonElement;
-    private VirtualFile directory;
+    private final String fileName;
+    private final String className;
+    private final JsonElement jsonElement;
+    private final VirtualFile directory;
 
     /**
      * 构造器
@@ -50,6 +49,28 @@ public class EnumGenerator implements CodeGenerator {
         this.directory = directory;
     }
 
+    /**
+     * 移除旧的文件
+     */
+    @Override
+    public void prepare() {
+        File file = new File(directory.getPath(), fileName);
+        if (file.exists() && file.isFile()) {
+            file.delete();
+        }
+    }
+
+    @NotNull
+    @Override
+    public File defineTargetFile() {
+        return new File(directory.getPath(), fileName);
+    }
+
+    /**
+     * 构建enum代码对象
+     *
+     * @return enumCodeInfo
+     */
     @NotNull
     private EnumCodeInfo create() {
         assert jsonElement.isJsonObject();
@@ -74,10 +95,10 @@ public class EnumGenerator implements CodeGenerator {
                     }
                 }
                 //如果没有value，则默认添加value，值为enumName
-                if(!attrKeySet.contains("value")) {
+                if (!attrKeySet.contains("value")) {
                     attrKeySet.add("value");
                 }
-                if(!attrMap.containsKey("value")) {
+                if (!attrMap.containsKey("value")) {
                     attrMap.put("value", elementEntry.getKey());
                 }
             }
@@ -87,6 +108,12 @@ public class EnumGenerator implements CodeGenerator {
         return new EnumCodeInfo(className, itemList, attrKeySet);
     }
 
+    /**
+     * json转dart基础类型，只解析int, double, String, bool类型，其他均返回null
+     *
+     * @param element jsonElement
+     * @return dartBaseType
+     */
     @Nullable
     private Object toDartBasicType(JsonElement element) {
         if (element.isJsonPrimitive()) {
@@ -104,17 +131,10 @@ public class EnumGenerator implements CodeGenerator {
         return null;
     }
 
-
+    @NotNull
     @Override
-    public void generate() {
-        deleteOldFile();
-        File file = new File(directory.getPath(), fileName);
+    public String generateCode() {
         EnumCodeInfo codeInfo = create();
-        System.out.println(new Gson().toJson(codeInfo));
-        FileUtils.putInFile(file, generateCode(codeInfo));
-    }
-
-    private String generateCode(EnumCodeInfo codeInfo) {
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append("///auto generate code, please do not modify;\n");
         generateEnumClass(codeBuilder, codeInfo);
@@ -186,18 +206,6 @@ public class EnumGenerator implements CodeGenerator {
             return "'" + value + "'";
         }
         return value.toString();
-    }
-
-    /**
-     * 移除旧的文件
-     *
-     * @return
-     */
-    private void deleteOldFile() {
-        File file = new File(directory.getPath(), fileName);
-        if (file.exists() && file.isFile()) {
-            file.delete();
-        }
     }
 
 }

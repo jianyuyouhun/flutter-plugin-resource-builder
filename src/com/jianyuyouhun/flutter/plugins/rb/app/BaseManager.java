@@ -1,16 +1,7 @@
 package com.jianyuyouhun.flutter.plugins.rb.app;
 
-import com.intellij.openapi.project.Project;
-
 public abstract class BaseManager {
-    private Project project;
-    public void onCreate(Project project) {
-        this.project = project;
-    }
-
-    protected Project getProject() {
-        return project;
-    }
+    public abstract void onCreate();
 
     public void onAllCreate() {
     }

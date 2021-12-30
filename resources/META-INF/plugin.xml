@@ -16,14 +16,12 @@
 
     <change-notes><![CDATA[
         1.0.5 新增enum生成器，原有的images类名改为大写
-        1.0.4 修复了android studio无法使用debug
-        1.0.3 修复了在mac环境下生成的资源文件静态变量不按照a-Z的顺序排列的bug
         ]]>
   </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-<!--    <idea-version since-build="173"/>-->
-        <idea-version since-build="172" until-build="203.4203.26"/>
+    <!--    <idea-version since-build="173"/>-->
+    <idea-version since-build="172" until-build="203.4203.26"/>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.lang</depends>
@@ -47,7 +45,6 @@
                 class="com.jianyuyouhun.flutter.plugins.rb.actions.GenerateEnumAction"
                 text="JsonToDartEnumAction" description="create Enum from Json">
             <add-to-group group-id="ResourceBuilder" anchor="first"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="E"/>
         </action>
     </actions>
 

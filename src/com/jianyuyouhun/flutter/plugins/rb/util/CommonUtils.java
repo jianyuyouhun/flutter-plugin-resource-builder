@@ -47,7 +47,7 @@ public class CommonUtils {
      */
     public static String camelToLine(String str) {
         Matcher matcher = humpPattern.matcher(str);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             matcher.appendReplacement(sb, "_" + matcher.group(0).toLowerCase());
         }

@@ -1,11 +1,11 @@
-package com.jianyuyouhun.flutter.plugins.rb.generator;
+package com.jianyuyouhun.flutter.plugins.rb.generator.res;
 
 import java.util.List;
 
 /**
  * 资源文件对象
  */
-public class ImageCodeInfo {
+class ImageCodeInfo {
     private String className;
     private List<ResField> fieldList;
 
@@ -25,7 +25,7 @@ public class ImageCodeInfo {
         this.fieldList = fieldList;
     }
 
-    public static class ResField {
+    static class ResField {
         private String key;
         private String value;
 
