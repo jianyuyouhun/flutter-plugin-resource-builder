@@ -22,9 +22,7 @@
 
 ## 安装步骤 ##
 
-1. 拉取本项目到你的**WorkSpace**目录.
-
-		git clone http://gitlab.knowrun.cn/study/FlutterResourceBuilder.git
+1. 下载项目里的ResourceBuilder.zip
 
 2. 打开Android Studio->setting->Plugins.
 
