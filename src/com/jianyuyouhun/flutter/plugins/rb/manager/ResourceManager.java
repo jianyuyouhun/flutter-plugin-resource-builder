@@ -73,6 +73,9 @@ public class ResourceManager extends BaseManager {
     private void generateCode(String path, String virtualPath) {
         File file = new File(path);
         File parentFile = file.getParentFile();
+        if(!parentFile.getPath().contains("lib")) {
+            parentFile = new File(path.replace(virtualPath, "") + "/lib");
+        }
         File targetFile = new File(parentFile, file.getName() + "-res.dart");
         CodeGenerator codeGenerator = new ImageGenerator(path, targetFile.getAbsolutePath(), virtualPath);
         codeGenerator.generate();

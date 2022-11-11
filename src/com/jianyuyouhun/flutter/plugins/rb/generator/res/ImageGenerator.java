@@ -15,6 +15,7 @@ public class ImageGenerator implements CodeGenerator {
     private String dirPath;
     private String outPath;
     private String virtualPath;
+    private static final String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     public ImageGenerator(String dirPath, String outPath, String virtualPath) {
         this.dirPath = dirPath;
@@ -96,14 +97,32 @@ public class ImageGenerator implements CodeGenerator {
                 getResField(fieldList, child);
             } else {
                 String name = child.getName();
-                if (name.endsWith("png") || name.endsWith("jpg") || name.endsWith("jpeg") || name.endsWith("gif")) {
+                if (name.endsWith("png") || name.endsWith("jpg") || name.endsWith("jpeg") || name.endsWith("gif") || name.endsWith("svg")) {
                     ImageCodeInfo.ResField resField = new ImageCodeInfo.ResField();
-                    resField.setKey(name.substring(0, name.lastIndexOf(".")));
+                    resField.setKey(formatName(name.substring(0, name.lastIndexOf("."))));
                     resField.setValue(child.getAbsolutePath().replaceAll("\\\\", "/").replace(dirPath, virtualPath));
                     fieldList.add(resField);
                 }
             }
         }
+    }
+
+    /**
+     * 转成合格字母，非字母的都以下划线代替
+     * @param fileName
+     * @return
+     */
+    private String formatName(String fileName) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < fileName.length(); i++) {
+            Character character = fileName.charAt(i);
+            if(alphabet.contains(character.toString())) {
+                result.append(character);
+            } else {
+                result.append("_");
+            }
+        }
+        return result.toString();
     }
 
     /**
