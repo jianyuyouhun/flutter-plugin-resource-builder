@@ -137,6 +137,7 @@ public class EnumGenerator extends AbstractCodeGenerator {
         EnumCodeInfo codeInfo = create();
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append("///auto generate code, please do not modify;\n");
+        codeBuilder.append(new EnumBeanFieldBuilder().buildFieldCode(codeInfo.getClassName(), "m" + codeInfo.getClassName()));
         generateEnumClass(codeBuilder, codeInfo);
         generateEnumUtilsClass(codeBuilder, codeInfo);
         generateEnumAttrClass(codeBuilder, codeInfo);
