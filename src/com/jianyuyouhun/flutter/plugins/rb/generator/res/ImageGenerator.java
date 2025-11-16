@@ -2,6 +2,8 @@ package com.jianyuyouhun.flutter.plugins.rb.generator.res;
 
 import com.jianyuyouhun.flutter.plugins.rb.generator.CodeGenerator;
 import com.jianyuyouhun.flutter.plugins.rb.util.FileUtils;
+import org.apache.http.util.TextUtils;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,7 +36,10 @@ public class ImageGenerator implements CodeGenerator {
         }
         ImageCodeInfo codeInfo = create(file);
         sortFieldList(codeInfo);
-        FileUtils.putInFile(new File(outPath), generateCode(codeInfo));
+        String codeString = generateCode(codeInfo);
+        if (!TextUtils.isEmpty(codeString)) {
+            FileUtils.putInFile(new File(outPath), generateCode(codeInfo));
+        }
     }
 
     /**
@@ -42,7 +47,11 @@ public class ImageGenerator implements CodeGenerator {
      *
      * @param codeInfo
      */
+    @Nullable
     private String generateCode(ImageCodeInfo codeInfo) {
+        if (codeInfo.getFieldList().size() == 0) {
+            return null;
+        }
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append("///auto generate code, please do not modify;\n");
         codeBuilder.append("class ").append(codeInfo.getClassName()).append(" {\n");
@@ -53,7 +62,7 @@ public class ImageGenerator implements CodeGenerator {
 
     private void generateFieldCode(List<ImageCodeInfo.ResField> fields, StringBuilder builder) {
         for (ImageCodeInfo.ResField field : fields) {
-            builder.append("   static const String ").append(field.getKey()).append(" = '").append(field.getValue()).append("';\n");
+            builder.append("  static const String ").append(field.getKey()).append(" = '").append(field.getValue()).append("';\n");
         }
     }
 

@@ -4,6 +4,8 @@
 
 此插件运行环境为flutter2.0+
 
+插件debug需要加jvm参数 -Djava.system.class.loader=com.intellij.util.lang.PathClassLoader
+
 ## 功能
 
 1.	图片资源自动处理

@@ -12,6 +12,7 @@ import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +31,14 @@ public class ResourceManager extends BaseManager {
         Project project = App.getInstance().getRootProject();
         long interval = TimeUnit.MILLISECONDS.toMillis(500);
         File rootPath = new File(project.getBasePath());
+        File resConfig = new File(project.getBasePath() + "/resource_builder.yaml");
+        if (!resConfig.exists()) {
+            try {
+                resConfig.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         File pubspec = new File(project.getBasePath() + "/pubspec.yaml");
         FileAlterationObserver observer = new FileAlterationObserver(rootPath);
         observer.addListener(new FileAlterationListenerAdaptor() {
@@ -54,6 +63,21 @@ public class ResourceManager extends BaseManager {
 
     private void start() {
         Project project = App.getInstance().getRootProject();
+        checkResourceDir(project);
+    }
+
+    private void checkResourceDir(Project project) {
+        Map<String, Object> yaml = YamlLoader.getYaml(project, "/resource_builder.yaml");
+        if (yaml == null) return;
+        if (yaml.get("enable") != null) {
+            boolean enable = (boolean) yaml.get("enable");
+            if (enable) {
+                _start(project);
+            }
+        }
+    }
+
+    private void _start(Project project) {
         Map<String, Object> yaml = YamlLoader.getYaml(project, "/pubspec.yaml");
         if (yaml == null) return;
         Map<String, Object> flutter = (Map<String, Object>) yaml.get("flutter");
@@ -73,7 +97,7 @@ public class ResourceManager extends BaseManager {
     private void generateCode(String path, String virtualPath) {
         File file = new File(path);
         File parentFile = file.getParentFile();
-        if(!parentFile.getPath().contains("lib")) {
+        if (!parentFile.getPath().contains("lib")) {
             parentFile = new File(path.replace(virtualPath, "") + "/lib");
         }
         File targetFile = new File(parentFile, file.getName() + "-res.dart");
