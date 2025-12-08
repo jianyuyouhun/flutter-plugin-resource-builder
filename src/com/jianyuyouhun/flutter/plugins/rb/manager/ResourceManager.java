@@ -12,6 +12,7 @@ import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,9 @@ public class ResourceManager extends BaseManager {
         if (!resConfig.exists()) {
             try {
                 resConfig.createNewFile();
+                FileWriter writer = new FileWriter(resConfig);
+                writer.write("enable: false\n");
+                writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
