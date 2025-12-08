@@ -6,7 +6,6 @@ import com.google.gson.JsonSyntaxException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.util.ui.JBUI;
-import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -107,7 +106,7 @@ public class InputJsonDialog extends DialogWrapper implements DocumentListener {
 
     protected void validateJson() {
         title = titleField.getText();
-        boolean titleExist = !StringUtils.isEmpty(title);
+        boolean titleExist = title != null && !title.isBlank();
         if (titleExist) {
             String text = jsonField.getText();
             try {
