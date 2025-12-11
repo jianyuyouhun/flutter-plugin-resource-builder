@@ -38,6 +38,7 @@ public class ResourceManager extends BaseManager {
                 resConfig.createNewFile();
                 FileWriter writer = new FileWriter(resConfig);
                 writer.write("enable: false\n");
+                writer.write("lowerCamelCase: true\n");
                 writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -81,6 +82,17 @@ public class ResourceManager extends BaseManager {
         }
     }
 
+    private boolean isLowerCamelCase() {
+        Project project = App.getInstance().getRootProject();
+        Map<String, Object> yaml = YamlLoader.getYaml(project, "/resource_builder.yaml");
+        if (yaml == null) return true;
+        if (yaml.get("lowerCamelCase") != null) {
+            return (boolean) yaml.get("lowerCamelCase");
+        } else {
+            return true;
+        }
+    }
+
     private void _start(Project project) {
         Map<String, Object> yaml = YamlLoader.getYaml(project, "/pubspec.yaml");
         if (yaml == null) return;
@@ -105,7 +117,7 @@ public class ResourceManager extends BaseManager {
             parentFile = new File(path.replace(virtualPath, "") + "/lib");
         }
         File targetFile = new File(parentFile, file.getName() + "-res.dart");
-        CodeGenerator codeGenerator = new ImageGenerator(path, targetFile.getAbsolutePath(), virtualPath);
+        CodeGenerator codeGenerator = new ImageGenerator(path, targetFile.getAbsolutePath(), virtualPath, isLowerCamelCase());
         codeGenerator.generate();
     }
 

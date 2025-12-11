@@ -20,11 +20,13 @@ public class ImageGenerator implements CodeGenerator {
     private String virtualPath;
     private static final String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final String number = "0123456789";
+    private boolean lowerCamelCase;
 
-    public ImageGenerator(String dirPath, String outPath, String virtualPath) {
+    public ImageGenerator(String dirPath, String outPath, String virtualPath, boolean lowerCamelCase) {
         this.dirPath = dirPath;
         this.outPath = outPath;
         this.virtualPath = virtualPath;
+        this.lowerCamelCase = lowerCamelCase;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class ImageGenerator implements CodeGenerator {
      */
     @Nullable
     private String generateCode(ImageCodeInfo codeInfo) {
-        if (codeInfo.getFieldList().size() == 0) {
+        if (codeInfo.getFieldList().isEmpty()) {
             return null;
         }
         StringBuilder codeBuilder = new StringBuilder();
@@ -119,26 +121,52 @@ public class ImageGenerator implements CodeGenerator {
     }
 
     /**
-     * 转成合格字母，非字母的都以下划线代替
+     * 转成合格字母，
+     * 下划线模式：非字母数字的都以下划线代替
+     * 驼峰模式：非字母数字的抛弃
      *
      * @param fileName
      * @return
      */
     private String formatName(String fileName) {
         StringBuilder result = new StringBuilder();
-        if (fileName.length() < 1) {
+        if (fileName.isEmpty()) {
             return "";
         }
-        Character firstChar = fileName.charAt(0);
-        if (number.contains(firstChar.toString())) {
+        char firstChar = fileName.charAt(0);
+        if (number.contains(Character.toString(firstChar))) {
             fileName = "m" + fileName;
         }
-        for (int i = 0; i < fileName.length(); i++) {
-            Character character = fileName.charAt(i);
-            if (alphabet.contains(character.toString())) {
-                result.append(character);
-            } else {
-                result.append("_");
+        if (!lowerCamelCase) {
+            for (int i = 0; i < fileName.length(); i++) {
+                Character character = fileName.charAt(i);
+                if (alphabet.contains(character.toString())) {
+                    result.append(character);
+                } else {
+                    result.append("_");
+                }
+            }
+        } else {
+            // 驼峰命名实现
+            boolean capitalizeNext = false;
+            for (int i = 0; i < fileName.length(); i++) {
+                Character character = fileName.charAt(i);
+                if (alphabet.contains(character.toString())) {
+                    if (capitalizeNext) {
+                        result.append(Character.toUpperCase(character));
+                        capitalizeNext = false;
+                    } else {
+                        // 第一个字符小写，其余正常添加
+                        if (i == 0) {
+                            result.append(Character.toLowerCase(character));
+                        } else {
+                            result.append(character);
+                        }
+                    }
+                } else {
+                    // 遇到非字母字符时，下一个字母需要大写
+                    capitalizeNext = true;
+                }
             }
         }
         return result.toString();
@@ -149,11 +177,12 @@ public class ImageGenerator implements CodeGenerator {
      *
      * @return
      */
-    private void deleteOldFile() {
+    private boolean deleteOldFile() {
         File file = new File(outPath);
         if (file.exists()) {
-            file.delete();
+            return file.delete();
         }
+        return true;
     }
 
 }

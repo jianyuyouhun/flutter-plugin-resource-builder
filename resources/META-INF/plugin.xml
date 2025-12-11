@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.jianyuyouhun.flutter.plugins.ResourceBuilder</id>
     <name>ResourceBuilder</name>
-    <version>1.0.11</version>
+    <version>1.0.12</version>
     <vendor email="jianyuyouhun@qq.com" url="http://jianyuyouhun.com">剑雨丶游魂</vendor>
 
     <description><![CDATA[
@@ -21,6 +21,7 @@
         1.0.8 增加res-webp解析，增加了json解析enum代码块
         1.0.9 自动移除空的res文件
         1.0.11 支持开关res-dart生成器
+        1.0.12 支持切换驼峰或者下划线命名
         ]]>
     </change-notes>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
